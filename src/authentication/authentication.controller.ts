@@ -8,6 +8,8 @@ import {
   Get,
   UseGuards,
   SerializeOptions,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
@@ -17,6 +19,7 @@ import { LocalAuthenticationGuard } from './localAuthentication.guard';
 import { JwtAuthenticationGuard } from './jwt-authentication.guard';
 
 @Controller('auth')
+@UseInterceptors(ClassSerializerInterceptor)
 @SerializeOptions({
   strategy: 'excludeAll',
 })
