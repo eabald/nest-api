@@ -11,6 +11,7 @@ import { ExceptionsLoggerFilter } from './utils/exceptionsLogger.filter';
 import { APP_FILTER } from '@nestjs/core';
 import { CategoriesModule } from './categories/categories.module';
 import { FilesModule } from './files/files.module';
+import { PrivateFilesModule } from './privateFiles/privateFiles.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { FilesModule } from './files/files.module';
     AuthenticationModule,
     CategoriesModule,
     FilesModule,
+    PrivateFilesModule,
   ],
   controllers: [AppController],
   providers: [
