@@ -12,6 +12,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { CategoriesModule } from './categories/categories.module';
 import { FilesModule } from './files/files.module';
 import { PrivateFilesModule } from './privateFiles/privateFiles.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { PrivateFilesModule } from './privateFiles/privateFiles.module';
     CategoriesModule,
     FilesModule,
     PrivateFilesModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [
