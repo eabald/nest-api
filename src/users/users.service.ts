@@ -11,6 +11,7 @@ import { User } from './user.entity';
 import CreateUserDto from './dto/createUser.dto';
 import { FilesService } from '../files/files.service';
 import { PrivateFilesService } from '../privateFiles/privateFiles.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -109,5 +110,29 @@ export class UsersService {
       );
     }
     throw new NotFoundException('User with this id does not exist');
+  }
+
+  async setCurrentRefreshToken(refreshToken: string, userId: number) {
+    const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    await this.usersRepository.update(userId, {
+      currentHashedRefreshToken,
+    });
+  }
+
+  async getUserIfRefreshTokenMatches(refreshToken: string, userId: number) {
+    const user = await this.getById(userId);
+    const isRefreshTokenMatching = await bcrypt.compare(
+      refreshToken,
+      user.currentHashedRefreshToken,
+    );
+    if (isRefreshTokenMatching) {
+      return user;
+    }
+  }
+
+  async removeRefreshToken(userId: number) {
+    return this.usersRepository.update(userId, {
+      currentHashedRefreshToken: null,
+    });
   }
 }
