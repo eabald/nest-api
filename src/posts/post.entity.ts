@@ -6,6 +6,7 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
+  Index,
 } from 'typeorm';
 import { User } from '../users/user.entity';
 import { Category } from '../categories/category.entity';
@@ -18,8 +19,8 @@ export class Post {
   @Column()
   public title: string;
 
-  @Column()
-  public content: string;
+  @Column('text', { array: true })
+  public paragraphs: string[];
 
   @Column({ nullable: true })
   @Transform((value) => {
@@ -29,6 +30,7 @@ export class Post {
   })
   public category?: string;
 
+  @Index('post_authorId_index')
   @ManyToOne(() => User, (author: User) => author.posts)
   public author: User;
 

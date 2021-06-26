@@ -1,8 +1,9 @@
-import { IsString } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 
 class CreatePostDto {
-  @IsString()
-  content: string;
+  @IsString({ each: true })
+  @IsNotEmpty()
+  paragraphs: string[];
 
   @IsString()
   title: string;

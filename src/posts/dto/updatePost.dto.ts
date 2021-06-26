@@ -1,11 +1,12 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
 
 class UpdatePostDto {
   @IsNumber()
   id: number;
 
-  @IsString()
-  content: string;
+  @IsString({ each: true })
+  @IsNotEmpty()
+  paragraphs: string[];
 
   @IsString()
   title: string;

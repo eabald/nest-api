@@ -22,8 +22,4 @@ import { join } from 'path';
     }),
   ],
 })
-export class DatabaseModule {
-  constructor() {
-    console.log(join(__dirname, '..', '**', '*.entity.js'));
-  }
-}
+export class DatabaseModule {}
