@@ -11,6 +11,7 @@ import { Post } from '../posts/post.entity';
 import { Expose } from 'class-transformer';
 import { PublicFile } from '../files/publicFile.entity';
 import { PrivateFile } from '../privateFiles/privateFile.entity';
+import { Comment } from '../comments/comment.entity';
 
 @Entity()
 export class User {
@@ -52,4 +53,7 @@ export class User {
     nullable: true,
   })
   public currentHashedRefreshToken?: string;
+
+  @OneToMany(() => Comment, (comment: Comment) => comment.post)
+  public comments: Comment[];
 }
