@@ -4,11 +4,19 @@ import * as cookieParser from 'cookie-parser';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { config } from 'aws-sdk';
 import { ConfigService } from '@nestjs/config';
+import { ExcludeNullInterceptor } from './utils/excludeNull.interceptor';
+import { runInCluster } from './utils/runInCluster';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.useGlobalInterceptors(new ExcludeNullInterceptor());
+
   app.use(cookieParser());
   const configService = app.get(ConfigService);
   config.update({
@@ -20,4 +28,4 @@ async function bootstrap() {
   });
   await app.listen(3000);
 }
-bootstrap();
+runInCluster(bootstrap);

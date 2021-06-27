@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  CACHE_MANAGER,
+  Inject,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import CreatePostDto from './dto/createPost.dto';
 import UpdatePostDto from './dto/updatePost.dto';
 import { Post } from './post.entity';
@@ -7,6 +13,8 @@ import { Repository, In } from 'typeorm';
 import { PostNotFoundException } from './exception/postNotFund.exception';
 import { User } from 'src/users/user.entity';
 import { PostsSearchService } from './postsSearch.service';
+import { GET_POSTS_CACHE_KEY } from './postsCacheKey.constant';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class PostsService {
@@ -14,7 +22,17 @@ export class PostsService {
     @InjectRepository(Post)
     private postsRepository: Repository<Post>,
     private postsSearchService: PostsSearchService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
+
+  async clearCache() {
+    const keys: string[] = await this.cacheManager.store.keys();
+    keys.forEach((key) => {
+      if (key.startsWith(GET_POSTS_CACHE_KEY)) {
+        this.cacheManager.del(key);
+      }
+    });
+  }
 
   async getAllPosts(offset?: number, limit?: number) {
     const [items, count] = await this.postsRepository.findAndCount({
@@ -49,6 +67,7 @@ export class PostsService {
     });
     if (updatedPost) {
       await this.postsSearchService.update(updatedPost);
+      await this.clearCache();
       return updatedPost;
     }
     throw new PostNotFoundException(id);
@@ -61,6 +80,7 @@ export class PostsService {
     });
     await this.postsRepository.save(newPost);
     this.postsSearchService.indexPost(newPost);
+    await this.clearCache();
     return newPost;
   }
 
@@ -70,6 +90,7 @@ export class PostsService {
       throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
     }
     await this.postsSearchService.remove(id);
+    await this.clearCache();
   }
 
   async searchForPosts(text: string, offset?: number, limit?: number) {
