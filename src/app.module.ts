@@ -15,9 +15,12 @@ import { PrivateFilesModule } from './privateFiles/privateFiles.module';
 import { SearchModule } from './search/search.module';
 import { SubscribersModule } from './subscribers/subscribers.module';
 import { CommentsModule } from './comments/comments.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { EmailSchedulingModule } from './email-scheduling/email-scheduling.module';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     PostsModule,
     ConfigModule.forRoot({
       envFilePath: 'docker.env',
@@ -45,6 +48,10 @@ import { CommentsModule } from './comments/comments.module';
         RABBITMQ_QUEUE_NAME: Joi.string().required(),
         REDIS_HOST: Joi.string().required(),
         REDIS_PORT: Joi.number().required(),
+        EMAIL_HOST: Joi.string().required(),
+        EMAIL_PORT: Joi.number().required(),
+        EMAIL_USER: Joi.string().required(),
+        EMAIL_PASSWORD: Joi.string().required(),
       }),
     }),
     DatabaseModule,
@@ -56,6 +63,7 @@ import { CommentsModule } from './comments/comments.module';
     SearchModule,
     SubscribersModule,
     CommentsModule,
+    EmailSchedulingModule,
   ],
   controllers: [AppController],
   providers: [
