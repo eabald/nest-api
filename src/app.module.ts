@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import * as Joi from '@hapi/joi';
@@ -18,9 +18,25 @@ import { CommentsModule } from './comments/comments.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { EmailSchedulingModule } from './email-scheduling/email-scheduling.module';
 import { ChatModule } from './chat/chat.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
+import { PubSubModule } from './pub-sub/pub-sub.module';
+import { Timestamp } from './utils/scalars/timestamp.scalar';
 
 @Module({
   imports: [
+    GraphQLModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        playground: Boolean(configService.get('GRAPHQL_PLAYGROUND')),
+        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+        installSubscriptionHandlers: true,
+        buildSchemaOptions: {
+          dateScalarMode: 'timestamp',
+        },
+      }),
+    }),
     ScheduleModule.forRoot(),
     PostsModule,
     ConfigModule.forRoot({
@@ -53,6 +69,7 @@ import { ChatModule } from './chat/chat.module';
         EMAIL_PORT: Joi.number().required(),
         EMAIL_USER: Joi.string().required(),
         EMAIL_PASSWORD: Joi.string().required(),
+        GRAPHQL_PLAYGROUND: Joi.number(),
       }),
     }),
     DatabaseModule,
@@ -66,10 +83,12 @@ import { ChatModule } from './chat/chat.module';
     CommentsModule,
     EmailSchedulingModule,
     ChatModule,
+    PubSubModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
+    Timestamp,
     {
       provide: APP_FILTER,
       useClass: ExceptionsLoggerFilter,

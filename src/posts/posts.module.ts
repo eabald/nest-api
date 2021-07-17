@@ -7,6 +7,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostsSearchService } from './postsSearch.service';
 import { SearchModule } from '../search/search.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PostsResolver } from './posts.resolver';
+import { UsersModule } from '../users/users.module';
+import PostsLoaders from './loaders/posts.loader';
 
 @Module({
   imports: [
@@ -24,8 +27,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ),
     TypeOrmModule.forFeature([Post]),
     SearchModule,
+    UsersModule,
   ],
   controllers: [PostsController],
-  providers: [PostsService, PostsSearchService],
+  providers: [PostsService, PostsSearchService, PostsResolver, PostsLoaders],
 })
 export class PostsModule {}

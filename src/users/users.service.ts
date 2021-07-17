@@ -7,7 +7,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Connection } from 'typeorm';
+import { Repository, Connection, In } from 'typeorm';
 import { User } from './user.entity';
 import CreateUserDto from './dto/createUser.dto';
 import { FilesService } from '../files/files.service';
@@ -151,6 +151,12 @@ export class UsersService {
   async removeRefreshToken(userId: number) {
     return this.usersRepository.update(userId, {
       currentHashedRefreshToken: null,
+    });
+  }
+
+  async getByIds(ids: number[]) {
+    return this.usersRepository.find({
+      where: { id: In(ids) },
     });
   }
 }

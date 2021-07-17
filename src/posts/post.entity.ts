@@ -8,6 +8,8 @@ import {
   JoinTable,
   Index,
   OneToMany,
+  RelationId,
+  CreateDateColumn,
 } from 'typeorm';
 import { User } from '../users/user.entity';
 import { Category } from '../categories/category.entity';
@@ -35,6 +37,18 @@ export class Post {
   @Index('post_authorId_index')
   @ManyToOne(() => User, (author: User) => author.posts)
   public author: User;
+
+  @RelationId((post: Post) => post.author)
+  public authorId: number;
+
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt: Date;
+
+  @Column({
+    type: 'timestamp',
+    nullable: true,
+  })
+  scheduledDate?: Date;
 
   @ManyToMany(() => Category)
   @JoinTable()
