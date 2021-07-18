@@ -22,6 +22,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { PubSubModule } from './pub-sub/pub-sub.module';
 import { Timestamp } from './utils/scalars/timestamp.scalar';
+import { BullModule } from '@nestjs/bull';
+import { OptimizeModule } from './optimize/optimize.module';
 
 @Module({
   imports: [
@@ -36,6 +38,16 @@ import { Timestamp } from './utils/scalars/timestamp.scalar';
           dateScalarMode: 'timestamp',
         },
       }),
+    }),
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.get('REDIS_HOST'),
+          port: Number(configService.get('REDIS_PORT')),
+        },
+      }),
+      inject: [ConfigService],
     }),
     ScheduleModule.forRoot(),
     PostsModule,
@@ -84,6 +96,7 @@ import { Timestamp } from './utils/scalars/timestamp.scalar';
     EmailSchedulingModule,
     ChatModule,
     PubSubModule,
+    OptimizeModule,
   ],
   controllers: [AppController],
   providers: [
