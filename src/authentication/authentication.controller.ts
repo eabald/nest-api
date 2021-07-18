@@ -16,9 +16,9 @@ import { AuthenticationService } from './authentication.service';
 import RegisterDto from './dto/register.dto';
 import RequestWithUser from './requestWithUser.interface';
 import { LocalAuthenticationGuard } from './localAuthentication.guard';
-import { JwtAuthenticationGuard } from './jwt-authentication.guard';
 import { UsersService } from '../users/users.service';
 import { JwtRefreshGuard } from './jwt-refresh.guard';
+import { JwtTwoFactorGuard } from './jwt-two-factor.guard';
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -52,10 +52,15 @@ export class AuthenticationController {
       accessTokenCookie,
       refreshTokenCookie,
     ]);
+
+    if (user.isTwoFactorAuthenticationEnabled) {
+      return;
+    }
+
     return user;
   }
 
-  @UseGuards(JwtAuthenticationGuard)
+  @UseGuards(JwtTwoFactorGuard)
   @Post('log-out')
   async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
     response.setHeader(
@@ -65,7 +70,7 @@ export class AuthenticationController {
     return response.sendStatus(200);
   }
 
-  @UseGuards(JwtAuthenticationGuard)
+  @UseGuards(JwtTwoFactorGuard)
   @Get()
   authenticate(@Req() request: RequestWithUser) {
     const user = request.user;

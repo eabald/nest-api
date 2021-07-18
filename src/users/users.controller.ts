@@ -12,18 +12,18 @@ import {
   Param,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { JwtAuthenticationGuard } from '../authentication/jwt-authentication.guard';
 import RequestWithUser from '../authentication/requestWithUser.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { FindOneParams } from '../utils/findOneParams';
+import { JwtTwoFactorGuard } from 'src/authentication/jwt-two-factor.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('avatar')
-  @UseGuards(JwtAuthenticationGuard)
+  @UseGuards(JwtTwoFactorGuard)
   @UseInterceptors(FileInterceptor('file'))
   async addAvatar(
     @Req() request: RequestWithUser,
@@ -37,13 +37,13 @@ export class UsersController {
   }
 
   @Delete('avatar')
-  @UseGuards(JwtAuthenticationGuard)
+  @UseGuards(JwtTwoFactorGuard)
   async deleteAvatar(@Req() request: RequestWithUser) {
     return this.usersService.deleteAvatar(request.user.id);
   }
 
   @Post('files')
-  @UseGuards(JwtAuthenticationGuard)
+  @UseGuards(JwtTwoFactorGuard)
   @UseInterceptors(FileInterceptor('file'))
   async addPrivateFile(
     @Req() request: RequestWithUser,
@@ -57,7 +57,7 @@ export class UsersController {
   }
 
   @Get('files/:id')
-  @UseGuards(JwtAuthenticationGuard)
+  @UseGuards(JwtTwoFactorGuard)
   async getPrivateFile(
     @Req() request: RequestWithUser,
     @Param() { id }: FindOneParams,
@@ -71,7 +71,7 @@ export class UsersController {
   }
 
   @Get('files')
-  @UseGuards(JwtAuthenticationGuard)
+  @UseGuards(JwtTwoFactorGuard)
   async getAllPrivateFiles(@Req() request: RequestWithUser) {
     return this.usersService.getAllPrivateFiles(request.user.id);
   }

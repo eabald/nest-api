@@ -56,4 +56,10 @@ export class User {
 
   @OneToMany(() => Comment, (comment: Comment) => comment.post)
   public comments: Comment[];
+
+  @Column({ nullable: true })
+  public twoFactorAuthenticationSecret?: string;
+
+  @Column({ default: false })
+  public isTwoFactorAuthenticationEnabled: boolean;
 }

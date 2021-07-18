@@ -8,9 +8,9 @@ import {
   ClassSerializerInterceptor,
   Inject,
 } from '@nestjs/common';
-import { JwtAuthenticationGuard } from '../authentication/jwt-authentication.guard';
 import { CreateSubscriberDto } from './dto/createSubscriber.dto';
 import { ClientProxy } from '@nestjs/microservices';
+import { JwtTwoFactorGuard } from 'src/authentication/jwt-two-factor.guard';
 
 @Controller('subscribers')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -20,7 +20,7 @@ export default class SubscribersController {
   ) {}
 
   @Get()
-  @UseGuards(JwtAuthenticationGuard)
+  @UseGuards(JwtTwoFactorGuard)
   async getSubscribers() {
     return this.subscribersService.send(
       {
@@ -31,7 +31,7 @@ export default class SubscribersController {
   }
 
   @Post()
-  @UseGuards(JwtAuthenticationGuard)
+  @UseGuards(JwtTwoFactorGuard)
   async createPost(@Body() subscriber: CreateSubscriberDto) {
     return this.subscribersService.send(
       {

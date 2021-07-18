@@ -13,8 +13,8 @@ import {
 import { CategoriesService } from './categories.service';
 import CreateCategoryDto from './dto/createCategory.dto';
 import UpdateCategoryDto from './dto/updateCategory.dto';
-import { JwtAuthenticationGuard } from '../authentication/jwt-authentication.guard';
 import { FindOneParams } from '../utils/findOneParams';
+import { JwtTwoFactorGuard } from '../authentication/jwt-two-factor.guard';
 
 @Controller('categories')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -32,7 +32,7 @@ export class CategoriesController {
   }
 
   @Post()
-  @UseGuards(JwtAuthenticationGuard)
+  @UseGuards(JwtTwoFactorGuard)
   async createCategory(@Body() category: CreateCategoryDto) {
     return this.categoriesService.createCategory(category);
   }
