@@ -4,7 +4,7 @@ import { Socket } from 'socket.io';
 import { parse } from 'cookie';
 import { WsException } from '@nestjs/websockets';
 import { InjectRepository } from '@nestjs/typeorm';
-import Message from './message.entity';
+import { Message } from './message.entity';
 import { User } from '../users/user.entity';
 import { Repository } from 'typeorm';
 

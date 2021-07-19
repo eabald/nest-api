@@ -14,7 +14,7 @@ import { JwtTwoFactorGuard } from 'src/authentication/jwt-two-factor.guard';
 
 @Controller('subscribers')
 @UseInterceptors(ClassSerializerInterceptor)
-export default class SubscribersController {
+export class SubscribersController {
   constructor(
     @Inject('SUBSCRIBERS_SERVICE') private subscribersService: ClientProxy,
   ) {}

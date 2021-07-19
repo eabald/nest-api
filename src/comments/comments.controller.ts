@@ -8,7 +8,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import RequestWithUser from '../authentication/requestWithUser.interface';
+import { RequestWithUser } from '../authentication/requestWithUser.interface';
 import { CreateCommentDto } from './dto/createComment.dto';
 import { CommentsService } from './comments.service';
 import { Post as PostEntity } from 'src/posts/post.entity';

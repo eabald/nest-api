@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import SubscribersController from './subscribers.controller';
+import { SubscribersController } from './subscribers.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 

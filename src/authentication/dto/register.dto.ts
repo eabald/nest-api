@@ -13,5 +13,3 @@ export class RegisterDto {
   @MinLength(7)
   password: string;
 }
-
-export default RegisterDto;

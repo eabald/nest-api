@@ -11,8 +11,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
-import CreateCategoryDto from './dto/createCategory.dto';
-import UpdateCategoryDto from './dto/updateCategory.dto';
+import { CreateCategoryDto } from './dto/createCategory.dto';
+import { UpdateCategoryDto } from './dto/updateCategory.dto';
 import { FindOneParams } from '../utils/findOneParams';
 import { JwtTwoFactorGuard } from '../authentication/jwt-two-factor.guard';
 

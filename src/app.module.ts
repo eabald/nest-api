@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
@@ -98,9 +96,7 @@ import { OptimizeModule } from './optimize/optimize.module';
     PubSubModule,
     OptimizeModule,
   ],
-  controllers: [AppController],
   providers: [
-    AppService,
     Timestamp,
     {
       provide: APP_FILTER,

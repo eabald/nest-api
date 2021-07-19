@@ -12,7 +12,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { Response } from 'express';
-import RequestWithUser from '../authentication/requestWithUser.interface';
+import { RequestWithUser } from '../authentication/requestWithUser.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { FindOneParams } from '../utils/findOneParams';

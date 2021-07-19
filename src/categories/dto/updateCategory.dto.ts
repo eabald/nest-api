@@ -10,5 +10,3 @@ export class UpdateCategoryDto {
   @IsOptional()
   name: string;
 }
-
-export default UpdateCategoryDto;

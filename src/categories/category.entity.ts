@@ -12,5 +12,3 @@ export class Category {
   @ManyToMany(() => Post, (post: Post) => post.categories)
   public posts: Post[];
 }
-
-export default Category;

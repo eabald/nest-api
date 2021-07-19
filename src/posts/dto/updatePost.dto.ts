@@ -1,6 +1,6 @@
 import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
 
-class UpdatePostDto {
+export class UpdatePostDto {
   @IsNumber()
   id: number;
 
@@ -11,5 +11,3 @@ class UpdatePostDto {
   @IsString()
   title: string;
 }
-
-export default UpdatePostDto;

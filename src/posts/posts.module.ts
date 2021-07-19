@@ -9,7 +9,7 @@ import { SearchModule } from '../search/search.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PostsResolver } from './posts.resolver';
 import { UsersModule } from '../users/users.module';
-import PostsLoaders from './loaders/posts.loader';
+import { PostsLoaders } from './loaders/posts.loader';
 
 @Module({
   imports: [

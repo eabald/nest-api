@@ -5,5 +5,3 @@ export class CreateCategoryDto {
   @IsNotEmpty()
   name: string;
 }
-
-export default CreateCategoryDto;

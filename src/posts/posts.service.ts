@@ -5,8 +5,8 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import CreatePostDto from './dto/createPost.dto';
-import UpdatePostDto from './dto/updatePost.dto';
+import { CreatePostDto } from './dto/createPost.dto';
+import { UpdatePostDto } from './dto/updatePost.dto';
 import { Post } from './post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
