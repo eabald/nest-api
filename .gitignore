@@ -35,3 +35,6 @@ lerna-debug.log*
 
 # DEV DB VOLUMES
 data
+
+# env
+.env
