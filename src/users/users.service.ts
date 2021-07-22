@@ -13,7 +13,6 @@ import { CreateUserDto } from './dto/createUser.dto';
 import { FilesService } from '../files/files.service';
 import { PrivateFilesService } from '../privateFiles/privateFiles.service';
 import * as bcrypt from 'bcrypt';
-import { StripeService } from 'src/stripe/stripe.service';
 
 @Injectable()
 export class UsersService {
@@ -23,7 +22,6 @@ export class UsersService {
     private readonly filesService: FilesService,
     private readonly privateFilesService: PrivateFilesService,
     private connection: Connection,
-    private stripeService: StripeService,
   ) {}
 
   async getById(id: number) {
@@ -49,15 +47,7 @@ export class UsersService {
   }
 
   async create(userData: CreateUserDto) {
-    const stripeCustomer = await this.stripeService.createCustomer(
-      userData.name,
-      userData.email,
-    );
-
-    const newUser = await this.usersRepository.create({
-      ...userData,
-      stripeCustomerId: stripeCustomer.id,
-    });
+    const newUser = await this.usersRepository.create(userData);
     await this.usersRepository.save(newUser);
     return newUser;
   }
