@@ -50,7 +50,6 @@ import { OptimizeModule } from './optimize/optimize.module';
     ScheduleModule.forRoot(),
     PostsModule,
     ConfigModule.forRoot({
-      envFilePath: 'docker.env',
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
         POSTGRES_PORT: Joi.number().required(),
