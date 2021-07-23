@@ -22,6 +22,8 @@ import { PubSubModule } from './pub-sub/pub-sub.module';
 import { Timestamp } from './utils/scalars/timestamp.scalar';
 import { BullModule } from '@nestjs/bull';
 import { OptimizeModule } from './optimize/optimize.module';
+import { StripeModule } from './stripe/stripe.module';
+import { ChargeModule } from './charge/charge.module';
 
 @Module({
   imports: [
@@ -79,6 +81,9 @@ import { OptimizeModule } from './optimize/optimize.module';
         EMAIL_USER: Joi.string().required(),
         EMAIL_PASSWORD: Joi.string().required(),
         GRAPHQL_PLAYGROUND: Joi.number(),
+        STRIPE_SECRET_KEY: Joi.string(),
+        STRIPE_CURRENCY: Joi.string(),
+        FRONTEND_URL: Joi.string(),
       }),
     }),
     DatabaseModule,
@@ -94,6 +99,8 @@ import { OptimizeModule } from './optimize/optimize.module';
     ChatModule,
     PubSubModule,
     OptimizeModule,
+    StripeModule,
+    ChargeModule,
   ],
   providers: [
     Timestamp,

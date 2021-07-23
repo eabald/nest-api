@@ -29,6 +29,9 @@ export class User {
   @Column()
   public password: string;
 
+  @Column()
+  public stripeCustomerId: string;
+
   @OneToOne(() => Address, {
     eager: true,
     cascade: true,
