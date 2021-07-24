@@ -191,4 +191,13 @@ export class UsersService {
       { monthlySubscriptionStatus },
     );
   }
+
+  async markEmailAsConfirmed(email: string) {
+    return this.usersRepository.update(
+      { email },
+      {
+        isEmailConfirmed: true,
+      },
+    );
+  }
 }

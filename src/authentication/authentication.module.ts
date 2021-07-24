@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
 import { TwoFactorAuthenticationController } from './twoFactor/twoFactorAuthentication.controller';
 import { TwoFactorAuthenticationService } from './twoFactor/twoFactorAuthentication.service';
+import { EmailConfirmationModule } from '../email-confirmation/email-confirmation.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { TwoFactorAuthenticationService } from './twoFactor/twoFactorAuthenticat
         },
       }),
     }),
+    EmailConfirmationModule,
   ],
   providers: [
     AuthenticationService,

@@ -27,6 +27,7 @@ import { ChargeModule } from './charge/charge.module';
 import { CreditCardsModule } from './credit-cards/credit-cards.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { StripeWebhookModule } from './stripe-webhook/stripe-webhook.module';
+import { EmailConfirmationModule } from './email-confirmation/email-confirmation.module';
 
 @Module({
   imports: [
@@ -62,6 +63,9 @@ import { StripeWebhookModule } from './stripe-webhook/stripe-webhook.module';
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),
         PORT: Joi.number(),
+        JWT_VERIFICATION_TOKEN_SECRET: Joi.string().required(),
+        JWT_VERIFICATION_TOKEN_EXPIRATION_TIME: Joi.string().required(),
+        EMAIL_CONFIRMATION_URL: Joi.string().required(),
         JWT_ACCESS_TOKEN_SECRET: Joi.string().required(),
         JWT_ACCESS_TOKEN_EXPIRATION_TIME: Joi.string().required(),
         JWT_REFRESH_TOKEN_SECRET: Joi.string().required(),
@@ -109,6 +113,7 @@ import { StripeWebhookModule } from './stripe-webhook/stripe-webhook.module';
     CreditCardsModule,
     SubscriptionModule,
     StripeWebhookModule,
+    EmailConfirmationModule,
   ],
   providers: [
     Timestamp,

@@ -12,12 +12,14 @@ import { JwtAuthenticationGuard } from '../authentication/jwt-authentication.gua
 import { RequestWithUser } from '../authentication/requestWithUser.interface';
 import { AddCreditCardDto } from './dto/addCreditCard.dto';
 import { SetDefaultCreditCardDto } from './dto/setDefaultCreditCard.dto';
+import { EmailConfirmationGuard } from '../email-confirmation/email-confirmation.guard';
 
 @Controller('credit-cards')
 export class CreditCardsController {
   constructor(private readonly stripeService: StripeService) {}
 
   @Post()
+  @UseGuards(EmailConfirmationGuard)
   @UseGuards(JwtAuthenticationGuard)
   async addCreditCard(
     @Body() creditCard: AddCreditCardDto,

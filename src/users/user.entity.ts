@@ -22,6 +22,9 @@ export class User {
   @Expose()
   public email: string;
 
+  @Column({ default: false })
+  public isEmailConfirmed: boolean;
+
   @Column()
   @Expose()
   public name: string;
