@@ -24,6 +24,9 @@ import { BullModule } from '@nestjs/bull';
 import { OptimizeModule } from './optimize/optimize.module';
 import { StripeModule } from './stripe/stripe.module';
 import { ChargeModule } from './charge/charge.module';
+import { CreditCardsModule } from './credit-cards/credit-cards.module';
+import { SubscriptionModule } from './subscription/subscription.module';
+import { StripeWebhookModule } from './stripe-webhook/stripe-webhook.module';
 
 @Module({
   imports: [
@@ -84,6 +87,8 @@ import { ChargeModule } from './charge/charge.module';
         STRIPE_SECRET_KEY: Joi.string(),
         STRIPE_CURRENCY: Joi.string(),
         FRONTEND_URL: Joi.string(),
+        MONTHLY_SUBSCRIPTION_PRICE_ID: Joi.string(),
+        STRIPE_WEBHOOK_SECRET: Joi.string(),
       }),
     }),
     DatabaseModule,
@@ -101,6 +106,9 @@ import { ChargeModule } from './charge/charge.module';
     OptimizeModule,
     StripeModule,
     ChargeModule,
+    CreditCardsModule,
+    SubscriptionModule,
+    StripeWebhookModule,
   ],
   providers: [
     Timestamp,

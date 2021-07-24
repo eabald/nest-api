@@ -6,10 +6,11 @@ import { config } from 'aws-sdk';
 import { ConfigService } from '@nestjs/config';
 import { ExcludeNullInterceptor } from './utils/excludeNull.interceptor';
 import { runInCluster } from './utils/runInCluster';
+import rawBodyMiddleware from './utils/rawBody.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  app.use(rawBodyMiddleware());
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -22,7 +23,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   app.enableCors({
     origin: configService.get('FRONTEND_URL'),
-    credentials: true,
+    credentials: false,
   });
   config.update({
     accessKeyId: configService.get('AWS_ACCESS_KEY_ID'),

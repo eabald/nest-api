@@ -32,6 +32,9 @@ export class User {
   @Column()
   public stripeCustomerId: string;
 
+  @Column({ nullable: true })
+  public monthlySubscriptionStatus?: string;
+
   @OneToOne(() => Address, {
     eager: true,
     cascade: true,

@@ -181,4 +181,14 @@ export class UsersService {
       isTwoFactorAuthenticationEnabled: true,
     });
   }
+
+  async updateMonthlySubscriptionStatus(
+    stripeCustomerId: string,
+    monthlySubscriptionStatus: string,
+  ) {
+    return this.usersRepository.update(
+      { stripeCustomerId },
+      { monthlySubscriptionStatus },
+    );
+  }
 }
