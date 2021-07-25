@@ -26,6 +26,12 @@ export class User {
   public isEmailConfirmed: boolean;
 
   @Column()
+  public phoneNumber: string;
+
+  @Column({ default: false })
+  public isPhoneNumberConfirmed: boolean;
+
+  @Column()
   @Expose()
   public name: string;
 
